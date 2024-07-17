@@ -1,6 +1,5 @@
-// Login.tsx
 import * as React from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
+import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -19,15 +18,16 @@ const defaultTheme = createTheme();
 
 export default function Login() {
   const navigate = useNavigate();
+  
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const email = data.get('email') as string;
-    const password = data.get('password') as string;
+    const nome = data.get('nome') as string;
+    const cpf = data.get('cpf') as string;
     
-    // Aqui você implementaria a lógica de autenticação com Keycloak ou outro método
+    // Implemente sua lógica de autenticação aqui
     // Exemplo simples de redirecionamento após login:
-    if (email === 'usuario@example.com' && password === 'senha') {
+    if (nome === 'Usuário' && cpf === '12345678900') {
       navigate('/dashboard'); // Redireciona para a página após o login
     } else {
       alert('Credenciais inválidas!');
@@ -57,21 +57,18 @@ export default function Login() {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="nome"
+              label="Nome"
+              name="nome"
               autoFocus
             />
             <TextField
               margin="normal"
               required
               fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
+              name="cpf"
+              label="CPF"
+              id="cpf"
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -92,7 +89,7 @@ export default function Login() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="/signup" variant="body2"> {/* Alterado para redirecionar para SignUp */}
+                <Link href="/signup" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

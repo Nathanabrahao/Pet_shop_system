@@ -30,7 +30,7 @@ const SignUp: React.FC = () => {
   
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post(`${UrlFix}/api/v1/usuario`, payload, {
+      const response = await axios.post(`/api/v1/usuario`, payload, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
