@@ -1,7 +1,6 @@
-// authService.ts
 import axios from 'axios';
 
-const AUTH_URL = 'https://acesso.cgtecnologia.com.br/realms/pethub/protocol/openid-connect/token';
+const AUTH_URL = 'https://acesso.cgtecnologia.com.br/realms/pethub/protocol/openid-connect/token';  
 const CLIENT_ID = 'pethub-api';
 const USERNAME = 'nathan.abrahao';
 const PASSWORD = '1gQvy3tjIqs=';
@@ -18,21 +17,16 @@ export const fetchToken = async () => {
     }), {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept' : '*/*'
       },
     });
 
     const token = response.data.access_token;
+    console.log('Token obtido:', token);
     localStorage.setItem('token', token);
     return token;
   } catch (error) {
-    console.error('Error fetching token:', error);
+    console.error('Erro ao buscar token:', error);
     throw error;
   }
 };
-
-// Call this function to fetch the token and store it in localStorage
-fetchToken().then(token => {
-  console.log('Token fetched and stored:', token);
-}).catch(error => {
-  console.error('Failed to fetch token:', error);
-});

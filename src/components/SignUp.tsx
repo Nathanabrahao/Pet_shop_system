@@ -1,4 +1,3 @@
-// SignUp.tsx
 import * as React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -8,39 +7,41 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios';
 
 const defaultTheme = createTheme();
 
 const SignUp: React.FC = () => {
   const navigate = useNavigate();
-  const [nome, setNome] = useState('');
-  const [cpf, setCpf] = useState('');
-  const [dataNascimento, setDataNascimento] = useState('');
-  const Url = "https://pethub-hml.cgtecnologia.com.br";
+  const [nome, setNome] = useState<string>('');
+  const [cpf, setCpf] = useState<string>('');
+  const [dataNascimento, setDataNascimento] = useState<string>('');
+  const UrlFix = 'https://pethub-hml.cgtecnologia.com.br'
+
 
   const handleSignUp = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log('Sending request to:', `/api/v1/usuario`); // Adicione este log
     const payload = {
       nome,
       cpf,
       dataNascimento,
     };
-
+  
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`${Url}/api/v1/usuario`, {
+      const response = await axios.post(`${UrlFix}/api/v1/usuario`, payload, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify(payload),
       });
 
-      const data = await response.json();
+      const data = await response.data;
       console.log('Response:', data);
-
-      if (response.ok) {
+  
+      if (!response) {
         alert('Usuário criado com sucesso!');
         navigate('/login');
       } else {

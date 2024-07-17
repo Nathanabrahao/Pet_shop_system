@@ -1,6 +1,7 @@
-// axiosConfig.ts
 import axios from 'axios';
 import { fetchToken } from './authService';
+
+fetchToken();
 
 const setupAxiosInterceptors = () => {
   axios.interceptors.request.use(
@@ -9,6 +10,11 @@ const setupAxiosInterceptors = () => {
       
       if (!token) {
         token = await fetchToken();
+
+        if (token) {
+          localStorage.setItem('token', token);
+          console.log(token)
+        }
       }
 
       if (token) {

@@ -1,9 +1,10 @@
-// App.tsx
 import * as React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
 import setupAxiosInterceptors from './axiosConfig';
+import axios from 'axios';
+
 
 setupAxiosInterceptors();
 
