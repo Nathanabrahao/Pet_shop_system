@@ -16,7 +16,7 @@ const SignUp: React.FC = () => {
   const [nome, setNome] = useState<string>('');
   const [cpf, setCpf] = useState<string>('');
   const [dataNascimento, setDataNascimento] = useState<string>('');
-  const UrlFix = 'https://pethub-hml.cgtecnologia.com.br'
+//  const UrlFix = 'https://pethub-hml.cgtecnologia.com.br'
 
 
   const handleSignUp = async (event: React.FormEvent<HTMLFormElement>) => {

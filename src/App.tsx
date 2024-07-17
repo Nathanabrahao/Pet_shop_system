@@ -17,10 +17,6 @@ const testAPIConnection = async () => {
 setupAxiosInterceptors();
 
 const App: React.FC = () => {
-  React.useEffect (() => {
-    testAPIConnection();
-    console.log(testAPIConnection)
-  })
   return (
     <Router>
       <Routes>
