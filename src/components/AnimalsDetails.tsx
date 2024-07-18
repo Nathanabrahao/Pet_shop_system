@@ -26,9 +26,9 @@ export default function AnimalDetails() {
   const [animal, setAnimal] = React.useState<AnimalDetails | null>(null);
   const [loading, setLoading] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string | null>(null);
-  const [animalList, setAnimalList] = React.useState<Animal[]>([]); // Lista de animais para pesquisa
+  const [animalList, setAnimalList] = React.useState<Animal[]>([]);
 
-  // Buscar a lista de animais (pode ser ajustado para obter a lista de um serviço ou contexto global)
+ 
   React.useEffect(() => {
     const fetchAnimalList = async () => {
       try {
