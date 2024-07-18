@@ -13,24 +13,52 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios';
 
 const defaultTheme = createTheme();
 
 export default function Login() {
-  const navigate = useNavigate();
-  
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const navigate = useNavigate(); 
+  const urlFix = 'https://pethub-hml.cgtecnologia.com.br';
+
+  const userValidate = async (nome: string, cpf: string) => {
+    try {
+      const response = await axios.get(`${urlFix}/api/v1/usuario`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+
+      const user = response.data;
+      if (user.nome === nome && user.cpf === cpf) {
+        localStorage.setItem('nomeUser', user.nome);
+        return user;
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.error('Erro ao buscar usuário:', error);
+      throw error;
+    }
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const nome = data.get('nome') as string;
     const cpf = data.get('cpf') as string;
-    
-    // Implemente sua lógica de autenticação aqui
-    // Exemplo simples de redirecionamento após login:
-    if (nome === 'Usuário' && cpf === '12345678900') {
-      navigate('/dashboard'); // Redireciona para a página após o login
-    } else {
-      alert('Credenciais inválidas!');
+
+    try {
+      const user = await userValidate(nome, cpf);
+      if (user) {
+        navigate('/animals');
+      } else {
+        alert('Credenciais inválidas!');
+      }
+    } catch (error) {
+      console.error('Erro ao autenticar:', error);
+      alert('Erro ao autenticar. Por favor, tente novamente.');
     }
   };
 
@@ -84,7 +112,7 @@ export default function Login() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link href="/animals" variant="body2">
                   Forgot password?
                 </Link>
               </Grid>

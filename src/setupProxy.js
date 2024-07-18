@@ -9,6 +9,13 @@ module.exports = function(app) {
       pathRewrite: {
         '^/api': '', 
       },
+    }),
+    createProxyMiddleware({
+      target: 'https://pethub-hml.cgtecnologia.com.br',
+      changeOrigin: true,
+      pathRewrite: {
+        '^/api': '', 
+      },
     })
   );
 };

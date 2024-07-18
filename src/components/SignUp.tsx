@@ -16,25 +16,27 @@ const SignUp: React.FC = () => {
   const [nome, setNome] = useState<string>('');
   const [cpf, setCpf] = useState<string>('');
   const [dataNascimento, setDataNascimento] = useState<string>('');
-//  const UrlFix = 'https://pethub-hml.cgtecnologia.com.br'
+  const UrlFix = 'https://pethub-hml.cgtecnologia.com.br/api/v1/usuario'
 
 
   const handleSignUp = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log('Sending request to:', `/api/v1/usuario`); // Adicione este log
     const payload = {
-      nome,
-      cpf,
-      dataNascimento,
+      nome: nome,
+      cpf: cpf,
+      dataNascimento: dataNascimento,
     };
   
+    console.log(payload)
+
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post(`/api/v1/usuario`, payload, {
+      const response = await axios.post(UrlFix, payload, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
+          Accept : 'application/json',
+          Authorization: `Bearer ${token}`,
         },
       });
 

@@ -1,29 +1,27 @@
 import axios from 'axios';
 
-const USERNAME = process.env.REACT_APP_USERNAME;
-const PASSWORD = process.env.REACT_APP_PASSWORD;
-const AUTH_URL = process.env.REACT_APP_AUTH_URL;
-const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
-const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET;
+const AUTH_URL = 'https://acesso.cgtecnologia.com.br/realms/pethub/protocol/openid-connect/token';  
+const CLIENT_ID = 'pethub-api';
+const USERNAME = 'nathan.abrahao';
+const PASSWORD = '1gQvy3tjIqs=';
+const CLIENT_SECRET = 'ORghXmmumTN11vqZP1a6tQcbp0V86Cfe';
 
 export const fetchToken = async () => {
   try {
-    const params = new URLSearchParams();
-    params.append('grant_type', 'password');
-    params.append('client_id', CLIENT_ID || '');
-    params.append('username', USERNAME || '');
-    params.append('password', PASSWORD || '');
-    params.append('client_secret', CLIENT_SECRET || '');
-
-    const response = await axios.post(AUTH_URL!, params, {
+    const response = await axios.post(AUTH_URL, new URLSearchParams({
+      grant_type: 'password',
+      client_id: CLIENT_ID,
+      username: USERNAME,
+      password: PASSWORD,
+      client_secret: CLIENT_SECRET,
+    }), {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Accept': '*/*'
+        'Accept' : '*/*'
       },
     });
 
     const token = response.data.access_token;
-    console.log('Token obtido:', token);
     localStorage.setItem('token', token);
     return token;
   } catch (error) {
